@@ -40,12 +40,7 @@ steps:
     environment:
       BUILD_ARCH: amd64
     commands:
-      - mkdir -p .dist
-      - rm -rf /nix
-      - cp -rfT ../nix /nix
-      - cd .tmp/cri-o-v1.30.1
-      - nix --print-build-logs --option cores 8 --option max-jobs 8 build --file nix/
-      - cp -r result/bin ../../.dist/${BUILD_ARCH}
+      - sh src/build.sh
 
   - name: docker-amd64
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0
@@ -66,20 +61,11 @@ steps:
         from_secret: REGISTRY_PASSWORD_ALIYUN
 
   - name: build-arm64
-    image: registry.cn-qingdao.aliyuncs.com/wod/golang:1.22-arm64
+    image: registry.cn-qingdao.aliyuncs.com/wod/nix:2.3.16
     environment:
       BUILD_ARCH: arm64
     commands:
-      - mkdir -p .dist
-      - rm -rf /nix
-      - cp -rfT .tmp/nix /nix
-      - cd .tmp/cri-o-v1.30.1
-      - rm -rf ./nix/default.nix
-      - cd nix
-      - ln -s default-arm64.nix default.nix
-      - cd ..
-      - nix --print-build-logs --option cores 8 --option max-jobs 8 build --file nix/
-      - cp -r result/bin ../../.dist/${BUILD_ARCH}
+      - sh src/build.sh
 
   - name: docker-arm64
     image: registry.cn-qingdao.aliyuncs.com/wod/devops-docker:1.0

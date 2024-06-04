@@ -1,13 +1,14 @@
 #!/bin/bash
 set -ex
 
-name=cri-o
-version=v1.30.1
+name=conmon
+version=v2.1.12
 
 if [ ! -d ${BUILD_ROOT}/.tmp/${name}-${version} ]; then
   git config --global http.proxy 'socks5://www.ali.wodcloud.com:1283'
-  git clone -b ${version} https://github.com/cri-o/cri-o ${BUILD_ROOT}/.tmp/${name}-${version}
+  git clone -b ${version} https://github.com/containers/conmon ${BUILD_ROOT}/.tmp/${name}-${version}
 fi
+
 
 cd ${BUILD_ROOT}/.tmp/${name}-${version}
 
