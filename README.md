@@ -10,18 +10,20 @@
 # amd64
 docker run -it --rm \
 -v $PWD/:/go/src/github.com/open-beagle/cri-o \
+-v $PWD/.tmp/nix:/nix \
 -w /go/src/github.com/open-beagle/cri-o \
 -e BUILD_ARCH=amd64 \
 registry.cn-qingdao.aliyuncs.com/wod/nix:2.3.16 \
-sh src/build.sh
+sh src/debug.sh
 
 # arm64
 docker run -it --rm \
 -v $PWD/:/go/src/github.com/open-beagle/cri-o \
+-v $PWD/.tmp/nix:/nix \
 -w /go/src/github.com/open-beagle/cri-o \
 -e BUILD_ARCH=arm64 \
 registry.cn-qingdao.aliyuncs.com/wod/nix:2.3.16 \
-sh src/build.sh
+sh src/debug.sh
 ```
 
 ## nix
@@ -30,6 +32,15 @@ sh src/build.sh
 docker pull nixos/nix:2.3.16 && \
 docker tag nixos/nix:2.3.16 registry.cn-qingdao.aliyuncs.com/wod/nix:2.3.16 && \
 docker push registry.cn-qingdao.aliyuncs.com/wod/nix:2.3.16
+
+docker run -it --rm \
+-v $PWD/:/go/src/github.com/open-beagle/cri-o \
+-w /go/src/github.com/open-beagle/cri-o \
+registry.cn-qingdao.aliyuncs.com/wod/nix:2.3.16 \
+sh -c '
+  mkdir -p $PWD/.tmp/nix && \
+  cp -rfT /nix $PWD/.tmp/nix
+'
 ```
 
 ## cri-o.deb

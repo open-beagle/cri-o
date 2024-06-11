@@ -9,9 +9,6 @@ if [ ! -d ${BUILD_ROOT}/.tmp/${name}-${version} ]; then
   git clone -b ${version} https://github.com/containers/conmon ${BUILD_ROOT}/.tmp/${name}-${version}
 fi
 
-
 cd ${BUILD_ROOT}/.tmp/${name}-${version}
-
 nix --print-build-logs --option cores 8 --option max-jobs 8 build --file nix/default-${BUILD_ARCH}.nix
-
 cp -r result/bin ${BUILD_ROOT}/.dist/${BUILD_ARCH}

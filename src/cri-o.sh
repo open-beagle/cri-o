@@ -10,7 +10,5 @@ if [ ! -d ${BUILD_ROOT}/.tmp/${name}-${version} ]; then
 fi
 
 cd ${BUILD_ROOT}/.tmp/${name}-${version}
-
 nix --print-build-logs --option cores 8 --option max-jobs 8 build --file nix/default-${BUILD_ARCH}.nix
-
 cp -r result/bin ${BUILD_ROOT}/.dist/${BUILD_ARCH}
