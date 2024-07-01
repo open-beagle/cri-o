@@ -10,5 +10,5 @@ LABEL maintainer=$AUTHOR version=$VERSION
 ARG TARGETOS
 ARG TARGETARCH
 
-COPY ./deb /
-COPY ./.dist/${TARGETARCH}/bin/* /deb/usr/bin
+COPY ./deb /deb/
+COPY ./.dist/${TARGETARCH}/bin/* /deb/usr/bin/
